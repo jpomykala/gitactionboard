@@ -3,10 +3,12 @@ fileignoreconfig:
   checksum: 1504018ca73f44e21989ea06edd277300204aa33eff3ae26b7548efd1946e59b
 - filename: .github/workflows/checks.yml
   checksum: 9f233870f84c4fb074a144d3abd47b3441214dff1a739bcece5409d2ff6bbde3
+- filename: .github/workflows/publish-ghcr.yml
+  checksum: 73a1153c7741a32bbe96974f49ce148659ee77c6c21bd4dbece60374a11f1f1b
 - filename: CHANGELOG.md
   checksum: c6c036d8bc39ed89984d47d43a6831a9aa943a41a0ab90d034ee1cf6ed616e5a
 - filename: USAGE.md
-  checksum: 85496a14621a8587ac5dcb8795648289255fc4360a72b137927bf9273a43e320
+  checksum: a21d1f719f3689296c466335341147450a3b5ef5838d3c0bc0e188f7549a36b5
 - filename: backend/build.gradle
   checksum: 916137197f40c06d4a6c49f9a52eb04ed823d7d7e9c86a0297279fdfb7a4be09
 - filename: backend/gradle/config/checkstyle.xml
@@ -24,7 +26,7 @@ fileignoreconfig:
 - filename: backend/src/main/java/de/otto/platform/gitactionboard/adapters/controller/GithubController.java
   checksum: c32406ebbcbeb0dcab970022b3b32eab2596c988b8fda7ab6ae9400ff3aaf779
 - filename: backend/src/main/java/de/otto/platform/gitactionboard/adapters/controller/MetricsController.java
-  checksum: cf2c0b1f4bad252e49e8416b27137a1a5391e2fced06cd31b7b38dfce9eab67e
+  checksum: 01b6f69f072f636881ac6b7dd8141388155dbbaaf9db1281038383f1273ca7c7
 - filename: backend/src/main/java/de/otto/platform/gitactionboard/adapters/controller/SecretsScanAlert.java
   checksum: 09ed82bc949fe0f77f188c7bf19d2b2a23c481c370d48abda012e7af911c7f47
 - filename: backend/src/main/java/de/otto/platform/gitactionboard/adapters/service/PeriodicScanScheduler.java
@@ -134,7 +136,7 @@ fileignoreconfig:
 - filename: frontend/mock-data/data.json
   checksum: 7142c869a6c0f35d4cc53f6fbf034cf17c451f4152d513054162feece5b3492c
 - filename: frontend/package-lock.json
-  checksum: b4d659824c93ca7f9a5ffd19a69e1784dc8817018b8d646d9bc960d5e5e3e4cd
+  checksum: 086d122940b37816a1e8390d6272137862a261d8cfc894edf55c9e17c273d94f
 - filename: frontend/src/components/Dashboard.vue
   checksum: 03ea94fc9fb03bf4856d852582831b8a1c239bfa486de8cb34c38c208fd76b2a
 - filename: frontend/src/components/GridCell.vue
