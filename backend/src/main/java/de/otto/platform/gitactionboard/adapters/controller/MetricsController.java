@@ -28,11 +28,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class MetricsController {
   private final MetricsService metricsService;
 
-  @GetMapping("/workflow-runs/{repoName}")
+  // repoNames are fully qualified as "owner/repo" (see GithubActionConfig#repoNames), so this
+  // uses a catch-all path variable to accept the embedded "/" instead of a single path segment.
+  @GetMapping("/workflow-runs/{*repoName}")
   public ResponseEntity<Map<String, List<WorkflowRunMetricDetails>>> getWorkflowRunMetrics(
       @PathVariable String repoName,
       @RequestParam(name = "from", required = false) Optional<Instant> from,
       @RequestParam(name = "to", required = false) Optional<Instant> to) {
+
+    if (repoName.startsWith("/")) repoName = repoName.substring(1);
 
     final Instant now = Instant.now();
     final Instant endTime = to.orElse(now);

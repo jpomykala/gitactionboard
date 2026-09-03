@@ -4,6 +4,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.util.Base64;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,18 +30,36 @@ public class GithubActionConfig {
   }
 
   @Bean(name = "ownerName")
-  public String ownerName(@Value("${REPO_OWNER_NAME}") String ownerName) {
-    if (ownerName.isBlank())
-      throw new IllegalArgumentException(
-          "REPO_OWNER_NAME environment variable is either empty or its not set");
+  public String ownerName(@Value("${REPO_OWNER_NAME:}") String ownerName) {
     return ownerName;
   }
 
+  /**
+   * Entries can either be a bare repo name (resolved against the default {@code
+   * REPO_OWNER_NAME}) or a fully qualified {@code owner/repo} pair, which lets a single instance
+   * monitor repositories across multiple GitHub organizations/users at once.
+   */
   @Bean(name = "repoNames")
-  public List<String> repoNames(@Value("${REPO_NAMES}") List<String> repoNames) {
+  public List<String> repoNames(
+      @Value("${REPO_NAMES}") List<String> repoNames, @Qualifier("ownerName") String ownerName) {
     if (repoNames.isEmpty())
       throw new IllegalArgumentException(
           "REPO_NAMES environment variable is either empty or its not set");
-    return repoNames.stream().toList();
+
+    return repoNames.stream()
+        .map(String::strip)
+        .map(repoName -> qualifyRepoName(repoName, ownerName))
+        .toList();
+  }
+
+  private String qualifyRepoName(String repoName, String ownerName) {
+    if (repoName.contains("/")) return repoName;
+
+    if (ownerName.isBlank())
+      throw new IllegalArgumentException(
+          "'%s' in REPO_NAMES is not qualified with an owner (owner/repo) and REPO_OWNER_NAME is not set"
+              .formatted(repoName));
+
+    return "%s/%s".formatted(ownerName, repoName);
   }
 }
