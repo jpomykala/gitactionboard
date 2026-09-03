@@ -16,10 +16,12 @@ public class GithubApiService {
 
   public GithubApiService(
       @Qualifier("domainName") String baseUri,
-      @Qualifier("ownerName") String ownerName,
       @Qualifier("authToken") String authToken,
       RestClient.Builder restClientBuilder) {
-    this.restClientBuilder = restClientBuilder.baseUrl("%s/repos/%s".formatted(baseUri, ownerName));
+    // repoNames (see GithubActionConfig#repoNames) are always fully qualified as "owner/repo" by
+    // this point, so the owner is no longer baked into the base URL - this is what lets a single
+    // instance monitor repositories across multiple GitHub organizations/users at once.
+    this.restClientBuilder = restClientBuilder.baseUrl("%s/repos".formatted(baseUri));
     this.authToken = authToken;
   }
 
